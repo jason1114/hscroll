@@ -5,6 +5,8 @@ An Android ListView that support horizontal slide
 
 <img src="https://raw.githubusercontent.com/jason1114/hscroll/master/app/demo.gif">
 
+You can also download the debug demo apk [here](https://raw.githubusercontent.com/jason1114/hscroll/master/app/app-debug.apk)
+
 ## How to use
 
 + Extend the *HScrollAdapter* first
