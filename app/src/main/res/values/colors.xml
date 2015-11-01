@@ -3,4 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="titleTextColor">#333</color>
+    <color name="contentTextColor">#999</color>
+
+    <color name="actionBg">#eee</color>
+
+    <color name="checkBg">#1de9b6</color>
+    <color name="deleteBg">#ff5722</color>
+    <color name="alarmBg">#FF8F00</color>
+    <color name="messageBg">#B2EBF2</color>
 </resources>

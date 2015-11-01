@@ -3,4 +3,14 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="w">300dp</dimen>
+
+    <dimen name="item_height">100dp</dimen>
+    <dimen name="item_padding_h">20dp</dimen>
+    <dimen name="item_padding_v">5dp</dimen>
+
+
+    <dimen name="sender_text_size">18sp</dimen>
+    <dimen name="title_text_size">15sp</dimen>
+    <dimen name="content_text_size">13sp</dimen>
+    <dimen name="content_padding">3dp</dimen>
 </resources>

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HScroll.iml" filepath="$PROJECT_DIR$/HScroll.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/horizontalslidelistview/horizontalslidelistview.iml" filepath="$PROJECT_DIR$/horizontalslidelistview/horizontalslidelistview.iml" />
     </modules>
   </component>
 </project>
