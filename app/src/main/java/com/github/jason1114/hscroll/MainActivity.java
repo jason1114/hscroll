@@ -23,13 +23,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         list = (ListView) findViewById(R.id.list);
-        list.setAdapter(new MyAdapter(this));
+        list.setAdapter(new MailAdapter(this));
     }
 
-    class MyAdapter extends HScrollAdapter {
+    class MailAdapter extends HScrollAdapter {
         List<Mail> mData;
 
-        public MyAdapter(Context context) {
+        public MailAdapter(Context context) {
             super(context);
             mData = new LinkedList<Mail>(){
                 {
