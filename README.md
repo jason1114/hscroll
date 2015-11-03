@@ -13,25 +13,7 @@ You can also download the debug demo apk [here](https://raw.githubusercontent.co
 ```java
   class MailAdapter extends HScrollAdapter {
 
-        public MailAdapter(Context context) {
-            super(context);
-        }
-
-        @Override
-        public int getCount() {
-            return mData.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return mData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
+        ......
 
         @Override
         public int getLayout(int type) {
