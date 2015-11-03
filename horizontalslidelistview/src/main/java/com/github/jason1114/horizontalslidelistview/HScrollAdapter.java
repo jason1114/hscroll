@@ -22,27 +22,31 @@ public abstract class HScrollAdapter extends BaseAdapter {
 
     /**
      * <p>
-     *     Layout Xml when item when sliding right and the left item is shown
+     *     Horizontal Slide States
      * </p>
-     * @return
      */
-    public abstract @LayoutRes int getLeftLayout();
+    public static final int STATE_LEFT_2 = 203;
+    public static final int STATE_LEFT_1 = 204;
+    public static final int STATE_NORMAL = 205;
+    public static final int STATE_RIGHT_1 = 206;
+    public static final int STATE_RIGHT_2 = 207;
 
     /**
      * <p>
-     *      Layout Xml that is shown when no horizontal slide is performed
+     *     Layout types
      * </p>
-     * @return
      */
-    public abstract @LayoutRes int getCenterLayout();
+    public static final int TYPE_RIGHT = 105;
+    public static final int TYPE_CENTER = 104;
+    public static final int TYPE_LEFT = 103;
 
     /**
      * <p>
-     *     Layout Xml when item when sliding left and the right item is shown
+     *     Layout Xml when item when sliding, there are three type: TYPE_RIGHT, TYPE_CENTER, TYPE_LEFT
      * </p>
      * @return
      */
-    public abstract @LayoutRes int getRightLayout();
+    public abstract @LayoutRes int getLayout(int type);
 
     /**
      * <p>
@@ -56,16 +60,9 @@ public abstract class HScrollAdapter extends BaseAdapter {
      */
     public abstract void renderView(int position, View left, View center, View right);
 
-    public abstract void onStateLeft2(int position, View left, View center, View right);
-    public abstract void onStateLeft1(int position, View left, View center, View right);
-    public abstract void onStateNormal(int position, View left, View center, View right);
-    public abstract void onStateRight1(int position, View left, View center, View right);
-    public abstract void onStateRight2(int position, View left, View center, View right);
+    public abstract void onState(int position, int state, View left, View center, View right);
 
-    public abstract void onStateLeft1Released(int position, View left, View center, View right);
-    public abstract void onStateLeft2Released(int position, View left, View center, View right);
-    public abstract void onStateRight1Released(int position, View left, View center, View right);
-    public abstract void onStateRight2Released(int position, View left, View center, View right);
+    public abstract void onStateReleased(int position, int state, View left, View center, View right);
 
     protected Context mContext;
 
@@ -122,9 +119,9 @@ public abstract class HScrollAdapter extends BaseAdapter {
             holder.hLayout.addView(leftArea);
             holder.hLayout.addView(centerArea);
             holder.hLayout.addView(rightArea);
-            holder.left = inflater.inflate(getLeftLayout(), leftArea);
-            holder.right = inflater.inflate(getRightLayout(), rightArea);
-            holder.center = inflater.inflate(getCenterLayout(), centerArea);
+            holder.left = inflater.inflate(getLayout(TYPE_LEFT), leftArea);
+            holder.right = inflater.inflate(getLayout(TYPE_RIGHT), rightArea);
+            holder.center = inflater.inflate(getLayout(TYPE_CENTER), centerArea);
             /**
              * Combine
              */
@@ -138,47 +135,47 @@ public abstract class HScrollAdapter extends BaseAdapter {
         holder.hsv.setScrollStateListener(new SlideItemView.ScrollStateListener() {
             @Override
             public void onStateLeft2() {
-                HScrollAdapter.this.onStateLeft2(position, holder.left, holder.center, holder.right);
+                HScrollAdapter.this.onState(position, STATE_LEFT_2, holder.left, holder.center, holder.right);
             }
 
             @Override
             public void onStateLeft1() {
-                HScrollAdapter.this.onStateLeft1(position, holder.left, holder.center, holder.right);
+                HScrollAdapter.this.onState(position, STATE_LEFT_1, holder.left, holder.center, holder.right);
             }
 
             @Override
             public void onStateNormal() {
-                HScrollAdapter.this.onStateNormal(position, holder.left, holder.center, holder.right);
+                HScrollAdapter.this.onState(position, STATE_NORMAL, holder.left, holder.center, holder.right);
             }
 
             @Override
             public void onStateRight1() {
-                HScrollAdapter.this.onStateRight1(position, holder.left, holder.center, holder.right);
+                HScrollAdapter.this.onState(position, STATE_RIGHT_1, holder.left, holder.center, holder.right);
             }
 
             @Override
             public void onStateRight2() {
-                HScrollAdapter.this.onStateRight2(position, holder.left, holder.center, holder.right);
+                HScrollAdapter.this.onState(position, STATE_RIGHT_2, holder.left, holder.center, holder.right);
             }
 
             @Override
             public void onStateLeft1Released() {
-                HScrollAdapter.this.onStateLeft1Released(position, holder.left, holder.center, holder.right);
+                HScrollAdapter.this.onStateReleased(position, STATE_LEFT_1, holder.left, holder.center, holder.right);
             }
 
             @Override
             public void onStateLeft2Released() {
-                HScrollAdapter.this.onStateLeft2Released(position, holder.left, holder.center, holder.right);
+                HScrollAdapter.this.onStateReleased(position, STATE_LEFT_2, holder.left, holder.center, holder.right);
             }
 
             @Override
             public void onStateRight1Released() {
-                HScrollAdapter.this.onStateRight1Released(position, holder.left, holder.center, holder.right);
+                HScrollAdapter.this.onStateReleased(position, STATE_RIGHT_1, holder.left, holder.center, holder.right);
             }
 
             @Override
             public void onStateRight2Released() {
-                HScrollAdapter.this.onStateRight2Released(position, holder.left, holder.center, holder.right);
+                HScrollAdapter.this.onStateReleased(position, STATE_RIGHT_2, holder.left, holder.center, holder.right);
             }
         });
         return convertView;

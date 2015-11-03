@@ -34,18 +34,17 @@ You can also download the debug demo apk [here](https://raw.githubusercontent.co
 
 
         @Override
-        public int getLeftLayout() {
-            return R.layout.item_left;
-        }
-
-        @Override
-        public int getCenterLayout() {
-            return R.layout.item;
-        }
-
-        @Override
-        public int getRightLayout() {
-            return R.layout.item_right;
+        public int getLayout(int type) {
+             switch (type) {
+                 case TYPE_LEFT:
+                     return R.layout.item_left;
+                 case TYPE_RIGHT:
+                     return R.layout.item_right;
+                 case TYPE_CENTER:
+                     return R.layout.item;
+                 default:
+                     throw new IllegalArgumentException();
+             }
         }
 
         @Override
@@ -54,48 +53,47 @@ You can also download the debug demo apk [here](https://raw.githubusercontent.co
         }
 
         @Override
-        public void onStateLeft2(int position, View left, View center, View right) {
-            // As the demo shows, the red 'delete' action state is 'StateLeft2'
+        public void onState(int position, int state, View left, View center, View right) {
+            // Callback when entering one state
+            switch (state) {
+                case STATE_LEFT_2:
+                    // do something ...
+                    break;
+                case STATE_LEFT_1:
+                    // do something ...
+                    break;
+                case STATE_NORMAL:
+                    // do something ...
+                    break;
+                case STATE_RIGHT_1:
+                    // do something ...
+                    break;
+                case STATE_RIGHT_2:
+                    // do something ...
+                    break;
+            }
         }
 
         @Override
-        public void onStateLeft1(int position, View left, View center, View right) {
-            // As the demo shows, the green 'check' action state is 'StateLeft1'
-        }
-
-        @Override
-        public void onStateNormal(int position, View left, View center, View right) {
-            // normal state
-        }
-
-        @Override
-        public void onStateRight1(int position, View left, View center, View right) {
-            // As the demo shows, the light blue 'message' action state is 'StateRight1'
-        }
-
-        @Override
-        public void onStateRight2(int position, View left, View center, View right) {
-            // As the demo shows, the orange 'delete' action state is 'StateLeft2'
-        }
-
-        @Override
-        public void onStateLeft1Released(int position, View left, View center, View right) {
-            // called when user's touch is released from 'StateLeft1'
-        }
-
-        @Override
-        public void onStateLeft2Released(int position, View left, View center, View right) {
-            // called when user's touch is released from 'StateLeft2'
-        }
-
-        @Override
-        public void onStateRight1Released(int position, View left, View center, View right) {
-            // called when user's touch is released from 'StateRight1'
-        }
-
-        @Override
-        public void onStateRight2Released(int position, View left, View center, View right) {
-            // called when user's touch is released from 'StateRight2'
+        public void onStateReleased(int position, int state, View left, View center, View right) {
+            // Callback when user's touch is released from one state
+            switch (state) {
+                 case STATE_LEFT_2:
+                     // do something ...
+                     break;
+                 case STATE_LEFT_1:
+                     // do something ...
+                     break;
+                 case STATE_NORMAL:
+                     // do something ...
+                     break;
+                 case STATE_RIGHT_1:
+                     // do something ...
+                     break;
+                 case STATE_RIGHT_2:
+                     // do something ...
+                     break;
+            }
         }
     }
 ```

@@ -77,20 +77,18 @@ public class MainActivity extends AppCompatActivity {
             return position;
         }
 
-
         @Override
-        public int getLeftLayout() {
-            return R.layout.item_left;
-        }
-
-        @Override
-        public int getCenterLayout() {
-            return R.layout.item;
-        }
-
-        @Override
-        public int getRightLayout() {
-            return R.layout.item_right;
+        public int getLayout(int type) {
+            switch (type) {
+                case TYPE_LEFT:
+                    return R.layout.item_left;
+                case TYPE_RIGHT:
+                    return R.layout.item_right;
+                case TYPE_CENTER:
+                    return R.layout.item;
+                default:
+                    throw new IllegalArgumentException();
+            }
         }
 
         @Override
@@ -118,80 +116,53 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onStateLeft2(int position, View left, View center, View right) {
+        public void onState(int position, int state, View left, View center, View right) {
             ViewHolder h = (ViewHolder) center.getTag();
-            h.actionCheck.setVisibility(View.INVISIBLE);
-            h.actionDelete.setVisibility(View.VISIBLE);
-            h.deleteBg.setVisibility(View.VISIBLE);
-            h.checkBg.setVisibility(View.INVISIBLE);
+            switch (state) {
+                case STATE_LEFT_2:
+                    h.actionCheck.setVisibility(View.INVISIBLE);
+                    h.actionDelete.setVisibility(View.VISIBLE);
+                    h.deleteBg.setVisibility(View.VISIBLE);
+                    h.checkBg.setVisibility(View.INVISIBLE);
+                    break;
+                case STATE_LEFT_1:
+                    h.actionCheck.setVisibility(View.VISIBLE);
+                    h.actionDelete.setVisibility(View.INVISIBLE);
+                    h.deleteBg.setVisibility(View.INVISIBLE);
+                    h.checkBg.setVisibility(View.VISIBLE);
+                    break;
+                case STATE_NORMAL:
+                    h.actionCheck.setVisibility(View.VISIBLE);
+                    h.actionDelete.setVisibility(View.INVISIBLE);
+                    h.actionMessage.setVisibility(View.VISIBLE);
+                    h.actionAlarm.setVisibility(View.INVISIBLE);
+                    h.deleteBg.setVisibility(View.INVISIBLE);
+                    h.checkBg.setVisibility(View.INVISIBLE);
+                    h.alarmBg.setVisibility(View.INVISIBLE);
+                    h.messageBg.setVisibility(View.INVISIBLE);
+                    break;
+                case STATE_RIGHT_1:
+                    h.messageBg.setVisibility(View.VISIBLE);
+                    h.alarmBg.setVisibility(View.INVISIBLE);
+                    h.actionAlarm.setVisibility(View.INVISIBLE);
+                    h.actionMessage.setVisibility(View.VISIBLE);
+                    break;
+                case STATE_RIGHT_2:
+                    h.messageBg.setVisibility(View.INVISIBLE);
+                    h.alarmBg.setVisibility(View.VISIBLE);
+                    h.actionAlarm.setVisibility(View.VISIBLE);
+                    h.actionMessage.setVisibility(View.INVISIBLE);
+                    break;
+            }
         }
 
         @Override
-        public void onStateLeft1(int position, View left, View center, View right) {
-            ViewHolder h = (ViewHolder) center.getTag();
-            h.actionCheck.setVisibility(View.VISIBLE);
-            h.actionDelete.setVisibility(View.INVISIBLE);
-            h.deleteBg.setVisibility(View.INVISIBLE);
-            h.checkBg.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        public void onStateNormal(int position, View left, View center, View right) {
-            ViewHolder h = (ViewHolder) center.getTag();
-            h.actionCheck.setVisibility(View.VISIBLE);
-            h.actionDelete.setVisibility(View.INVISIBLE);
-            h.actionMessage.setVisibility(View.VISIBLE);
-            h.actionAlarm.setVisibility(View.INVISIBLE);
-            h.deleteBg.setVisibility(View.INVISIBLE);
-            h.checkBg.setVisibility(View.INVISIBLE);
-            h.alarmBg.setVisibility(View.INVISIBLE);
-            h.messageBg.setVisibility(View.INVISIBLE);
-
-        }
-
-        @Override
-        public void onStateRight1(int position, View left, View center, View right) {
-            ViewHolder h = (ViewHolder) center.getTag();
-            h.messageBg.setVisibility(View.VISIBLE);
-            h.alarmBg.setVisibility(View.INVISIBLE);
-            h.actionAlarm.setVisibility(View.INVISIBLE);
-            h.actionMessage.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        public void onStateRight2(int position, View left, View center, View right) {
-            ViewHolder h = (ViewHolder) center.getTag();
-            h.messageBg.setVisibility(View.INVISIBLE);
-            h.alarmBg.setVisibility(View.VISIBLE);
-            h.actionAlarm.setVisibility(View.VISIBLE);
-            h.actionMessage.setVisibility(View.INVISIBLE);
-        }
-
-        @Override
-        public void onStateLeft1Released(int position, View left, View center, View right) {
-            mData.remove(position);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public void onStateLeft2Released(int position, View left, View center, View right) {
-            mData.remove(position);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public void onStateRight1Released(int position, View left, View center, View right) {
-            mData.remove(position);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public void onStateRight2Released(int position, View left, View center, View right) {
+        public void onStateReleased(int position, int state, View left, View center, View right) {
             mData.remove(position);
             notifyDataSetChanged();
         }
     }
-    class ViewHolder {
+    static class ViewHolder {
         ImageView actionDelete, actionCheck, actionMessage, actionAlarm;
         TextView sender, title, content;
         View checkBg, deleteBg, alarmBg, messageBg;
