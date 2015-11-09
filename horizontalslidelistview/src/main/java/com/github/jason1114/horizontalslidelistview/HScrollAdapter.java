@@ -85,7 +85,7 @@ public abstract class HScrollAdapter extends BaseAdapter {
     @Override
     public final View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            ViewHolder holder = new ViewHolder();
+            final ViewHolder holder = new ViewHolder();
             /**
              * Horizontal ScrollView
              */
@@ -122,6 +122,19 @@ public abstract class HScrollAdapter extends BaseAdapter {
             holder.left = inflater.inflate(getLayout(TYPE_LEFT), leftArea);
             holder.right = inflater.inflate(getLayout(TYPE_RIGHT), rightArea);
             holder.center = inflater.inflate(getLayout(TYPE_CENTER), centerArea);
+            holder.hsv.setScrollStateListener(new SlideItemView.ScrollStateListener() {
+                @Override
+                public void onState(int state) {
+                    HScrollAdapter.this.onState(
+                            holder.position, state, holder.left, holder.center, holder.right);
+                }
+
+                @Override
+                public void onStateReleased(int state) {
+                    HScrollAdapter.this.onStateReleased(
+                            holder.position, state, holder.left, holder.center, holder.right);
+                }
+            });
             /**
              * Combine
              */
@@ -130,60 +143,16 @@ public abstract class HScrollAdapter extends BaseAdapter {
             convertView.setTag(holder);
         }
         final ViewHolder holder = (ViewHolder) convertView.getTag();
+        holder.position = position;
         renderView(position, holder.left, holder.center, holder.right);
         holder.hsv.restoreScrollPosition();
-        holder.hsv.setScrollStateListener(new SlideItemView.ScrollStateListener() {
-            @Override
-            public void onStateLeft2() {
-                HScrollAdapter.this.onState(position, STATE_LEFT_2, holder.left, holder.center, holder.right);
-            }
-
-            @Override
-            public void onStateLeft1() {
-                HScrollAdapter.this.onState(position, STATE_LEFT_1, holder.left, holder.center, holder.right);
-            }
-
-            @Override
-            public void onStateNormal() {
-                HScrollAdapter.this.onState(position, STATE_NORMAL, holder.left, holder.center, holder.right);
-            }
-
-            @Override
-            public void onStateRight1() {
-                HScrollAdapter.this.onState(position, STATE_RIGHT_1, holder.left, holder.center, holder.right);
-            }
-
-            @Override
-            public void onStateRight2() {
-                HScrollAdapter.this.onState(position, STATE_RIGHT_2, holder.left, holder.center, holder.right);
-            }
-
-            @Override
-            public void onStateLeft1Released() {
-                HScrollAdapter.this.onStateReleased(position, STATE_LEFT_1, holder.left, holder.center, holder.right);
-            }
-
-            @Override
-            public void onStateLeft2Released() {
-                HScrollAdapter.this.onStateReleased(position, STATE_LEFT_2, holder.left, holder.center, holder.right);
-            }
-
-            @Override
-            public void onStateRight1Released() {
-                HScrollAdapter.this.onStateReleased(position, STATE_RIGHT_1, holder.left, holder.center, holder.right);
-            }
-
-            @Override
-            public void onStateRight2Released() {
-                HScrollAdapter.this.onStateReleased(position, STATE_RIGHT_2, holder.left, holder.center, holder.right);
-            }
-        });
         return convertView;
     }
 
-    class ViewHolder {
+    static class ViewHolder {
         SlideItemView hsv;
         MultipleWidthLinearLayout hLayout;
         View left, center, right;
+        int position;
     }
 }

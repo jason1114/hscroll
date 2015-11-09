@@ -194,27 +194,27 @@ public class SlideItemView extends HorizontalScrollView {
         switch (currentState) {
             case STATE_LEFT_2:
                 if (mState != STATE_LEFT_2 && mScrollStateListener != null && !mReleased) {
-                    mScrollStateListener.onStateLeft2();
+                    mScrollStateListener.onState(HScrollAdapter.STATE_LEFT_2);
                 }
                 break;
             case STATE_LEFT_1:
                 if (mState != STATE_LEFT_1 && mScrollStateListener != null && !mReleased) {
-                    mScrollStateListener.onStateLeft1();
+                    mScrollStateListener.onState(HScrollAdapter.STATE_LEFT_1);
                 }
                 break;
             case STATE_NORMAL:
                 if (mState != STATE_NORMAL && mScrollStateListener != null && !mReleased) {
-                    mScrollStateListener.onStateNormal();
+                    mScrollStateListener.onState(HScrollAdapter.STATE_NORMAL);
                 }
                 break;
             case STATE_RIGHT_1:
                 if (mState != STATE_RIGHT_1 && mScrollStateListener != null && !mReleased) {
-                    mScrollStateListener.onStateRight1();
+                    mScrollStateListener.onState(HScrollAdapter.STATE_RIGHT_1);
                 }
                 break;
             case STATE_RIGHT_2:
                 if (mState != STATE_RIGHT_2 && mScrollStateListener != null && !mReleased) {
-                    mScrollStateListener.onStateRight2();
+                    mScrollStateListener.onState(HScrollAdapter.STATE_RIGHT_2);
                 }
                 break;
         }
@@ -227,14 +227,14 @@ public class SlideItemView extends HorizontalScrollView {
                 this.post(new Runnable() {
                     @Override
                     public void run() {
-                        mScrollStateListener.onStateLeft1Released();
+                        mScrollStateListener.onStateReleased(HScrollAdapter.STATE_LEFT_1);
                     }
                 });
             } else if (mStateReleaseFrom == STATE_LEFT_2) {
                 this.post(new Runnable() {
                     @Override
                     public void run() {
-                        mScrollStateListener.onStateLeft2Released();
+                        mScrollStateListener.onStateReleased(HScrollAdapter.STATE_LEFT_2);
                     }
                 });
             }
@@ -246,14 +246,14 @@ public class SlideItemView extends HorizontalScrollView {
                 this.post(new Runnable() {
                     @Override
                     public void run() {
-                        mScrollStateListener.onStateRight1Released();
+                        mScrollStateListener.onStateReleased(HScrollAdapter.STATE_RIGHT_1);
                     }
                 });
             } else if (mStateReleaseFrom == STATE_RIGHT_2) {
                 this.post(new Runnable() {
                     @Override
                     public void run() {
-                        mScrollStateListener.onStateRight2Released();
+                        mScrollStateListener.onStateReleased(HScrollAdapter.STATE_RIGHT_2);
                     }
                 });
             }
@@ -319,18 +319,11 @@ public class SlideItemView extends HorizontalScrollView {
         /**
          * Callbacks triggered when scroll state change
          */
-        void onStateLeft2();
-        void onStateLeft1();
-        void onStateNormal();
-        void onStateRight1();
-        void onStateRight2();
+        void onState(int state);
 
         /**
          * Callbacks triggered when release from some scroll state
          */
-        void onStateLeft1Released();
-        void onStateLeft2Released();
-        void onStateRight1Released();
-        void onStateRight2Released();
+        void onStateReleased(int state);
     }
 }
